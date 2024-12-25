@@ -7,11 +7,13 @@ import streamlit as st
 from counter import Counter
 from sidebar import Sidebarr
 
+import tools
+
 TIMEZONE = "Europe/Bratislava"
 
 
 def main():
-    print("main rerun")
+    tools.load_user_state()
 
     if "user_tz" not in st.session_state:
         st.session_state.user_tz = get_localzone_name()
