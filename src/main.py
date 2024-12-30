@@ -4,12 +4,11 @@ from whenever import ZonedDateTime
 from tzlocal import get_localzone_name
 import streamlit as st
 
+from counter_new import NewCounter
 from counter import Counter
 from sidebar import Sidebarr
 
 import tools
-
-TIMEZONE = "Europe/Bratislava"
 
 
 def main():
@@ -22,11 +21,14 @@ def main():
 
     st.title("Counters")
 
+    new_counter = NewCounter(st.session_state.user_tz)
+
     counters = set()
 
     time1 = ZonedDateTime.from_timestamp(1735148070, tz=st.session_state.user_tz)
     counter1 = Counter("Counter1", "short description", "#f0f030", time1, st.session_state.user_tz)
     counters.add(counter1)
+
     time2 = ZonedDateTime(2024, 12, 1, 0, 0, 0, tz=st.session_state.user_tz)
     counter2 = Counter("Counter2", "short description another", "#f0f030", time2, st.session_state.user_tz)
     counters.add(counter2)
