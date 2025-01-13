@@ -14,22 +14,25 @@ class Counter:
     
     def _create_holder(self) -> DeltaGenerator:
         with st.container(border=True):
-            col1, col2, col3 = st.columns([0.07, 0.73, 0.2], vertical_alignment="center")
+            col1, col2, col3 = st.columns([0.7, 0.1, 0.2], vertical_alignment="top")
 
             with col1:
+                st.markdown(f"### {self.title}\n{self.desc}")
+                holder = st.empty()
+
+            with col2:
                 st.markdown(
                     f"""<div style="background-color:{self.color_hex}; 
-                    width:40px; height: 40px; border-radius: 50%;"></div>""", 
+                    width:30px; height: 30px; border-radius: 50%;"></div>""", 
                     unsafe_allow_html=True
                 )
 
-            with col2:
-                st.markdown(f"### {self.title}\n{self.desc}")
-                holder = st.empty()
-            
             with col3:
                 st.button("Change date", key=self.title + "change", use_container_width=True)
+                st.button("Pause timer", key=self.title + "pause", use_container_width=True)
                 st.button("Delete", key=self.title + "delete", use_container_width=True)
+            
+            # with col3:
 
         return holder
     

@@ -19,18 +19,19 @@ class NewCounter:
     def _create_holder(self) -> None:
         with st.expander("Create new"):
             with st.container(border=True):
-                col1, col2, col3 = st.columns([0.07, 0.73, 0.2], vertical_alignment="bottom")
+                self.title = st.text_input("Title", max_chars=50)
+                self.desc = st.text_input("Description", max_chars=50)
+                st.checkbox("Precise time")
+
+                col1, col2, col3 = st.columns([0.73, 0.07, 0.2], vertical_alignment="bottom")
 
                 with col1:
-                    self.color = st.color_picker("Color", value=self.color)
-
-                with col2:
-                    self.title = st.text_input("Title", max_chars=50)
-                    self.desc = st.text_input("Description", max_chars=50)
-
                     col_date, col_time = st.columns(2)
                     self.date = col_date.date_input("Start date", value="today")
                     self.time = col_time.time_input("Start time", value="now")
+
+                with col2:
+                    self.color = st.color_picker("Color", value=self.color)
                 
                 with col3:
                     st.button("Create", key="new", use_container_width=True, on_click=self._create_handle)
