@@ -9,5 +9,4 @@ dependencies = [
     "humanize>=4.11.0",
     "streamlit>=1.41.1",
     "tzlocal>=5.2",
-    "whenever>=0.6.16",
 ]

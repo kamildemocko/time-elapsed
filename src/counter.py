@@ -1,14 +1,15 @@
-from whenever import ZonedDateTime
+import arrow
 from humanize import precisedelta
 from streamlit.delta_generator import DeltaGenerator
 import streamlit as st
 
 class Counter:
-    def __init__(self, title: str, desc: str, color_hex: str, start_time: ZonedDateTime, tz: str) -> None:
+    def __init__(self, title: str, desc: str, color_hex: str, start_time: float, precise_time: bool, tz: str) -> None:
         self.title = title
         self.desc = desc
         self.color_hex = color_hex
         self.start_time = start_time
+        self.precise_time = precise_time
         self.holder = self._create_holder()
         self.tz = tz
     
@@ -31,12 +32,13 @@ class Counter:
                 st.button("Change date", key=self.title + "change", use_container_width=True)
                 st.button("Pause timer", key=self.title + "pause", use_container_width=True)
                 st.button("Delete", key=self.title + "delete", use_container_width=True)
-            
-            # with col3:
 
         return holder
     
     def update(self) -> None:
-        now = ZonedDateTime.now(self.tz)
-        time_delta = now.difference(self.start_time).py_timedelta()
-        self.holder.text(precisedelta(time_delta, minimum_unit="seconds", format="%.0f"))
+        now = arrow.now(self.tz)
+        time_delta = now - arrow.get(self.start_time)
+        if self.precise_time:
+            self.holder.text(precisedelta(time_delta, minimum_unit="seconds", format="%.0f"))
+        else:
+            self.holder.text(precisedelta(time_delta, minimum_unit="days", format="%.0f"))
